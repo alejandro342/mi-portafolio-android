@@ -1,3 +1,6 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyBQ3_l4mgXQCsDB57CycWc85BzcJpwzaMU",
   authDomain: "myportafolio-c95ce.firebaseapp.com",
@@ -7,8 +10,8 @@ const firebaseConfig = {
   appId: "1:287998507502:web:7204a1e64747f52d0676ff"
 };
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 // Carga dinámica de proyectos
 async function loadProjects() {
@@ -16,7 +19,8 @@ async function loadProjects() {
     if (!container) return;
     
     try {
-        const querySnapshot = await db.collection("projects").orderBy("createdAt", "desc").get();
+        const q = query(collection(db, "projects"), orderBy("createdAt", "desc"));
+        const querySnapshot = await getDocs(q);
         
         container.innerHTML = ''; // Limpiar mensaje de carga
         
