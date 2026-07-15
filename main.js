@@ -62,7 +62,5 @@ async function loadProjects() {
     }
 }
 
-// Iniciar la carga de proyectos al cargar el DOM
-document.addEventListener('DOMContentLoaded', () => {
-    loadProjects();
-});
+// Iniciar la carga de proyectos (al usar type="module", el DOM ya está listo)
+loadProjects();
